@@ -1,0 +1,32 @@
+Set up the game initially
+    Create a game board
+        1. Initialize board constructor with variable size,# of mines, and a new array list called board
+        2. Create a method to render the board, loop through the 2d arraylist, and print it out
+        3. Have a method to create a 2D array with the size as the number of columns and rows
+        4. Create method to render Column numbers and insert it next to the board
+        5. Create method to insert the necessary number bombs into random coordinates using for loop
+        (Have math.random() to create x and y coordinates.)
+        (If there is already a bomb in the coordinate then you get new coordinates)
+        6. Have a method openAllCells if the player loses to show all the cells.
+
+    Create a player
+        1. Initialize player constructor with variable name
+        2. Create method askForCoordinates
+        (Display message asking for x and y coordinates and returns an array with the coords)
+        3. Create method coordinateIsOnBoard
+        (IF coordinates are outside of the board, print error message and return false, else return true)
+        4. Create method getCoordinates
+        (Checks if coordinates are valid using other methods and returns the valid coordinates, loops askForCoordinates if invalid)
+    Create a cell class
+        1. Have a open/close status for the cells in the board
+        2. It is a ? if closed and it is cellValue when true
+        3. The cell Object will have a value and coordinates
+Start the game loop
+    Render the board
+    Ask for and validate the player's coordinates
+    If the game ends
+        Display the proper victory / loss message
+        Stop looping
+    Else
+        Map hints on the board and keep looping
+
