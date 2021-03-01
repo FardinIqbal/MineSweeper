@@ -46,7 +46,6 @@ public class Board {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 if(!board[row][col].getValue().equals("*")) {
-                    System.out.println(board[row][col].getValue());
                     board[row][col].setValue(numberOfSurroundingMines(new int[]{row, col}));
                 }
             }
@@ -64,19 +63,16 @@ public class Board {
     }
 
     public int[][] getSurroundingCellCoordinates(int[] currentCoordinates) {
-        System.out.println(Arrays.toString(currentCoordinates));
         int numberOfSurroundingCells = numberOfSurroundingCells(currentCoordinates);
         int[][] surroundingCellCoordinates = new int[numberOfSurroundingCells][2];
         int i = 0;
         for (int[] coordinates : this.surroundingCellsCoordinates) {
             int[] surroundingCoordinate = addCoordinates(coordinates, currentCoordinates);
             if(coordinatesAreOnBoard(surroundingCoordinate)){
-                System.out.println("surrounding" + Arrays.toString(surroundingCoordinate));
                 surroundingCellCoordinates[i] = surroundingCoordinate;
                 i++;
             }
         }
-        System.out.println(Arrays.deepToString(surroundingCellCoordinates));
         return surroundingCellCoordinates;
     }
 
