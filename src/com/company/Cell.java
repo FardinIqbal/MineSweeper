@@ -20,8 +20,8 @@ public class Cell {
         this.value = value;
     }
 
-    public void setOpenStatus() {
-        openStatus = true;
+    public void toggleOpenStatus() {
+        openStatus = !openStatus;
     }
 
     public boolean getOpenStatus() {

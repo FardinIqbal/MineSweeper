@@ -9,7 +9,7 @@ public class Board {
     private final int[][] surroundingCellsCoordinates = new int[][]{
             {-1, 1},  {0, 1},  {1, 1},
             {-1, 0},           {1, 0},
-            {-1, -1},  {0, -1},{1, -1}
+            {-1, -1}, {0, -1}, {1, -1}
     };
 
     // initialize board
@@ -19,6 +19,9 @@ public class Board {
         this.size = size;
         this.numberOfMines = numberOfMines;
         createBoard();
+    }
+    public Cell getCell (int[] coordinates) {
+        return this.board[coordinates[0]][coordinates[1]];
     }
 
     public void createBoard() {
@@ -124,7 +127,7 @@ public class Board {
     // render
     public void render() {
         // loop through the 2D array
-        openAllCells();
+//        openAllCells();
         renderColumnNumbers();
         for (int row = 0; row < size; row++) {
             if (row >= 9) {
@@ -133,7 +136,7 @@ public class Board {
                 System.out.print(row + 1 + "  |");
             }
             for (int col = 0; col < size; col++) {
-                System.out.print(" " + board[row][col].getValue() + " |");
+                System.out.print(" " + board[row][col].getDisplayValue() + " |");
             }
             System.out.println();
         }
@@ -142,7 +145,8 @@ public class Board {
     public void openAllCells() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                this.board[row][col].setOpenStatus();
+                if (!board[row][col].getOpenStatus())
+                this.board[row][col].toggleOpenStatus();
             }
         }
     }
