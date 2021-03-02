@@ -1,7 +1,5 @@
 package com.company;
 
-import java.util.Arrays;
-
 public class Board {
     private final int size;
     private final Cell[][] board;
@@ -20,6 +18,15 @@ public class Board {
         this.numberOfMines = numberOfMines;
         createBoard();
     }
+
+    public Cell[][] getBoard() {
+        return this.board;
+    }
+
+    public void placeFlag(int[] coordinates) {
+        board[coordinates[0]][coordinates[1]].toggleIsFlagged();
+    }
+
     public Cell getCell (int[] coordinates) {
         return this.board[coordinates[0]][coordinates[1]];
     }

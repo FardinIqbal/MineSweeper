@@ -10,11 +10,24 @@ public class MineSweeper {
     }
 
     public void play(){
-        int[] coodinates;
+        int[] coordinates;
+        String option;
         while (!gameFinished) {
             board.render();
-            coodinates = player.getCoordinates();
-            playMove(coodinates);
+            option = player.askForAction();
+            if (option.equals("c")) {
+                coordinates = player.getCoordinates();
+                boolean flagged = board.getBoard()[coordinates[0]][coordinates[1]].getFlagStatus();
+                while (flagged) {
+                    System.out.println("You flagged that cell. Choose a different coordinate.");
+                    coordinates = player.getCoordinates();
+                    flagged = board.getBoard()[coordinates[0]][coordinates[1]].getFlagStatus();
+                }
+                playMove(coordinates);
+            } else {
+                coordinates = player.getCoordinates();
+                this.board.placeFlag(coordinates);
+            }
         }
     }
 

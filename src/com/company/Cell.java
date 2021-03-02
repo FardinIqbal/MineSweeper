@@ -2,6 +2,8 @@ package com.company;
 
 public class Cell {
     private boolean openStatus = false;
+    private boolean isFlagged = false;
+
     private String value;
 
     public Cell(String value) {
@@ -13,7 +15,13 @@ public class Cell {
     }
 
     public String getDisplayValue() {
-        return openStatus ? this.value : "?";
+        if (openStatus) {
+            return this.value;
+        }else if (isFlagged) {
+            return "f";
+        }else {
+            return "?";
+        }
     }
 
     public void setValue(String value) {
@@ -27,4 +35,8 @@ public class Cell {
     public boolean getOpenStatus() {
         return openStatus;
     }
+
+    public void toggleIsFlagged() { this.isFlagged = !isFlagged; }
+
+    public boolean getFlagStatus() { return this.isFlagged; }
 }

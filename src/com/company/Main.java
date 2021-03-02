@@ -20,7 +20,7 @@ public class Main {
 
     public static boolean askPlayAgain() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Do you want to play again?");
+        System.out.println("Do you want to play again? Enter y (yes) or n (no): ");
         String playAgain = sc.nextLine().trim().toLowerCase();
         while (!playAgain.equals("y") && !playAgain.equals("n")) {
             System.out.println("That's not a valid answer. Do you want to play again?");

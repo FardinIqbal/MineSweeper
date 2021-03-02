@@ -1,4 +1,5 @@
 package com.company;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Player {
@@ -63,8 +64,12 @@ public class Player {
         Scanner sc = new Scanner(System.in);
         // Display message asking for action
         System.out.println("Enter F to flag or C to clear the coordinates: ");
-        // return the input from the console as a string
-        return sc.nextLine();
+        String input = sc.nextLine().trim().toLowerCase();
+        while (!input.equals("f") && !input.equals("c")) {
+            System.out.println("That is not an option. Enter F to flag or C to clear the coordinates: ");
+            input = sc.nextLine().trim().toLowerCase();
+        }
+        return input;
     }
 
     // coordinateIsOnBoard
