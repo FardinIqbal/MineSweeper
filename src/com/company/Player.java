@@ -51,7 +51,6 @@ public class Player {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number of bombs from 10-30: ");
         int mines = sc.nextInt();
-        System.out.println(mines < 10 || mines > 30);
         while (mines < 10 || mines > 30) {
             System.out.println("The number you entered is out of range. Enter the number of mines from 10-30: ");
             mines = sc.nextInt();

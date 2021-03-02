@@ -12,7 +12,7 @@ public class MineSweeper {
     public void play(){
         int[] coordinates;
         String option;
-        while (!gameFinished) {
+        while (!gameFinished && !gameWon()) {
             board.render();
             option = player.askForAction();
             if (option.equals("c")) {
@@ -31,9 +31,24 @@ public class MineSweeper {
         }
     }
 
+    public boolean gameWon(){
+        for (Cell[] row :
+                this.board.getBoard()) {
+            for (Cell cell :
+                    row) {
+                if (cell.getCloseStatus()) {
+                    return false;
+                }
+            }
+        }
+        System.out.println("You ");
+        return true;
+    }
+
     public void playMove(int[] coordinates) {
         Cell cell = board.getCell(coordinates);
-        cell.toggleOpenStatus();
+        cell.openCell();
+        board.openAllEmptyCells(coordinates);
         if (cell.getValue().equals("*")) {
             gameFinished = true;
             board.openAllCells();

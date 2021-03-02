@@ -5,8 +5,8 @@ public class Board {
     private final Cell[][] board;
     private final int numberOfMines;
     private final int[][] surroundingCellsCoordinates = new int[][]{
-            {-1, 1},  {0, 1},  {1, 1},
-            {-1, 0},           {1, 0},
+            {-1, 1}, {0, 1}, {1, 1},
+            {-1, 0}, {1, 0},
             {-1, -1}, {0, -1}, {1, -1}
     };
 
@@ -27,7 +27,7 @@ public class Board {
         board[coordinates[0]][coordinates[1]].toggleIsFlagged();
     }
 
-    public Cell getCell (int[] coordinates) {
+    public Cell getCell(int[] coordinates) {
         return this.board[coordinates[0]][coordinates[1]];
     }
 
@@ -43,7 +43,7 @@ public class Board {
 
     public void insertMines() {
         int[] coordinate = randomCoordinate();
-        for(int mines = 0; mines < numberOfMines; mines++) {
+        for (int mines = 0; mines < numberOfMines; mines++) {
             while (board[coordinate[0]][coordinate[1]].getValue().equals("*")) {
                 coordinate = randomCoordinate();
             }
@@ -55,7 +55,7 @@ public class Board {
     public void fillEmptyCells() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                if(!board[row][col].getValue().equals("*")) {
+                if (!board[row][col].getValue().equals("*")) {
                     board[row][col].setValue(numberOfSurroundingMines(new int[]{row, col}));
                 }
             }
@@ -64,12 +64,28 @@ public class Board {
 
     public String numberOfSurroundingMines(int[] currentCoordinates) {
         int mines = 0;
-        for(int[] coordinates : getSurroundingCellCoordinates(currentCoordinates)) {
-            if(board[coordinates[0]][coordinates[1]].getValue().equals("*")) {
+        for (int[] coordinates : getSurroundingCellCoordinates(currentCoordinates)) {
+            if (board[coordinates[0]][coordinates[1]].getValue().equals("*")) {
                 mines++;
             }
         }
         return mines + "";
+    }
+
+    public void openAllEmptyCells(int[] coordinates) {
+        if (board[coordinates[0]][coordinates[1]].getValue().equals("0")) {
+            for (int[] surroundingCoordinates : getSurroundingCellCoordinates(coordinates)) {
+                if (board[surroundingCoordinates[0]][surroundingCoordinates[1]].getValue().equals("0")
+                        && board[surroundingCoordinates[0]][surroundingCoordinates[1]].getCloseStatus()) {
+                    board[surroundingCoordinates[0]][surroundingCoordinates[1]].openCell();
+                    openAllEmptyCells(surroundingCoordinates);
+                }
+            }
+            for (int[] surroundingCoordinates : getSurroundingCellCoordinates(coordinates)) {
+                board[surroundingCoordinates[0]][surroundingCoordinates[1]].openCell();
+            }
+        }
+
     }
 
     public int[][] getSurroundingCellCoordinates(int[] currentCoordinates) {
@@ -78,7 +94,7 @@ public class Board {
         int i = 0;
         for (int[] coordinates : this.surroundingCellsCoordinates) {
             int[] surroundingCoordinate = addCoordinates(coordinates, currentCoordinates);
-            if(coordinatesAreOnBoard(surroundingCoordinate)){
+            if (coordinatesAreOnBoard(surroundingCoordinate)) {
                 surroundingCellCoordinates[i] = surroundingCoordinate;
                 i++;
             }
@@ -97,7 +113,7 @@ public class Board {
     public int numberOfSurroundingCells(int[] coordinates) {
         if (isCornerCell(coordinates)) {
             return 3;
-        } else if (isEdgeCell(coordinates)){
+        } else if (isEdgeCell(coordinates)) {
             return 5;
         } else {
             return 8;
@@ -111,7 +127,7 @@ public class Board {
         return (row == 0 && col == 0)
                 || (row == 0 && col == size - 1)
                 || (col == 0 && row == size - 1)
-                || (col == size -1 && row == size - 1);
+                || (col == size - 1 && row == size - 1);
     }
 
     public boolean isEdgeCell(int[] coordinates) {
@@ -124,17 +140,16 @@ public class Board {
     }
 
     public int[] addCoordinates(int[] coordinate1, int[] coordinate2) {
-        return new int[] {coordinate1[0] + coordinate2[0], coordinate1[1] + coordinate2[1]};
+        return new int[]{coordinate1[0] + coordinate2[0], coordinate1[1] + coordinate2[1]};
     }
 
-    public int[] randomCoordinate () {
-        return new int[] {(int) (Math.random() * size), (int) (Math.random() * size)};
+    public int[] randomCoordinate() {
+        return new int[]{(int) (Math.random() * size), (int) (Math.random() * size)};
     }
 
     // render
     public void render() {
         // loop through the 2D array
-//        openAllCells();
         renderColumnNumbers();
         for (int row = 0; row < size; row++) {
             if (row >= 9) {
@@ -152,8 +167,8 @@ public class Board {
     public void openAllCells() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                if (!board[row][col].getOpenStatus())
-                this.board[row][col].toggleOpenStatus();
+                if (board[row][col].getCloseStatus())
+                    this.board[row][col].openCell();
             }
         }
     }
