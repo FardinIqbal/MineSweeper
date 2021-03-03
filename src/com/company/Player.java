@@ -1,18 +1,16 @@
 package com.company;
-import java.util.Locale;
+
 import java.util.Scanner;
 
 public class Player {
-    // Initialize
-    public Player(){
-    }
+    public int boardSize;
 
     // getCoordinates
     public int[] getCoordinates() {
         // askForCoordinates
         int[] coordinates = askForCoordinates();
         // loop until the inputted coordinates are valid
-        while (!coordinatesAreOnBoard(coordinates)) {
+        while (!coordinatesAreOnBoard(coordinates, this.boardSize)) {
             // askForCoordinates
             coordinates = askForCoordinates();
         }
@@ -35,25 +33,33 @@ public class Player {
 
     //askForSize
     public int askForSize() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the size of the board you want between 10 (10x10) - 30 (30x30): ");
-        int size = sc.nextInt();
+        System.out.println("Enter the size of the board you want between 10 (10x10) - 30 (30x30): ");// Initial prompt for input
+        int size = askForInteger();
+        // And now you can use the input variable.
         while (size < 10 || size > 30) {
             System.out.println("The number you entered is out of range. Enter the size from 10-30: ");
-            size = sc.nextInt();
+            size = askForInteger();
         }
         return size;
     }
 
+    private int askForInteger() {
+        Scanner sc = new Scanner(System.in);// Initial prompt for input
+        // Repeat until next item is an integer
+        while (!sc.hasNextInt()) {
+            sc.next(); // Read and discard offending non-int input
+            System.out.print("Please enter an integer: "); // Re-prompt
+        }
+        return sc.nextInt();
+    }
 
     //numberOfMines
     public int askForNumberOfMines() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number of bombs from 10-30: ");
-        int mines = sc.nextInt();
+        int mines = askForInteger();
         while (mines < 10 || mines > 30) {
             System.out.println("The number you entered is out of range. Enter the number of mines from 10-30: ");
-            mines = sc.nextInt();
+            mines = askForInteger();
         }
         return mines;
     }
@@ -72,17 +78,20 @@ public class Player {
     }
 
     // coordinateIsOnBoard
-    public boolean coordinatesAreOnBoard(int[] coordinates) {
+    public boolean coordinatesAreOnBoard(int[] coordinates, int size) {
         // IF coordinates are outside of the board
         if (coordinates[0] < 0
-                || coordinates[0] > 10
+                || coordinates[0] >= size
                 || coordinates[1] < 0
-                || coordinates[1] > 10) {
+                || coordinates[1] >= size) {
             // print error message
-            System.out.println("The coordinates");
+            System.out.println("The coordinates are out of bounds.");
             return false;
         }
         return true;
     }
 
+    public void setBoardSize(int boardSize) {
+        this.boardSize = boardSize;
+    }
 }

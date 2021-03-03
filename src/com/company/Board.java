@@ -5,8 +5,8 @@ public class Board {
     private final Cell[][] board;
     private final int numberOfMines;
     private final int[][] surroundingCellsCoordinates = new int[][]{
-            {-1, 1}, {0, 1}, {1, 1},
-            {-1, 0}, {1, 0},
+            {-1, 1},  {0, 1},  {1, 1},
+            {-1, 0},           {1, 0},
             {-1, -1}, {0, -1}, {1, -1}
     };
 
@@ -21,6 +21,10 @@ public class Board {
 
     public Cell[][] getBoard() {
         return this.board;
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public void placeFlag(int[] coordinates) {
@@ -144,7 +148,7 @@ public class Board {
     }
 
     public int[] randomCoordinate() {
-        return new int[]{(int) (Math.random() * size), (int) (Math.random() * size)};
+        return new int[]{(int) (Math.random() * (size - 1)), (int) (Math.random() * (size - 1))};
     }
 
     // render
